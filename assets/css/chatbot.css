@@ -184,9 +184,10 @@ body.gima-chatbot-body-lock {
 
 .gima-chatbot-table {
 	border-collapse: collapse;
+	table-layout: fixed;
 	width: 100%;
 	margin: 0 0 8px;
-	font-size: 12.5px;
+	font-size: 12px;
 }
 
 .gima-chatbot-table th,
@@ -195,6 +196,9 @@ body.gima-chatbot-body-lock {
 	padding: 4px 6px;
 	text-align: left;
 	vertical-align: top;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	white-space: normal;
 }
 
 .gima-chatbot-table th {

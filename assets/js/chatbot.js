@@ -47,10 +47,21 @@
 	// HTML-escaped first, so nothing the model outputs can inject real markup;
 	// the only href scheme allowed is http(s), so the link step can't turn
 	// escaped text back into a javascript: URL or similar.
-	function renderInline( text ) {
-		text = text.replace( /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, function ( match, label, url ) {
+	// Handles [label](url), <url> autolinks, and bare URLs in a single pass
+	// (one regex, tried left-to-right per position) so a URL already consumed
+	// by one form is never re-matched and wrapped again by another.
+	var LINK_PATTERN = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|&lt;(https?:\/\/[^\s&]+)&gt;|(https?:\/\/[^\s<]+)/g;
+
+	function linkify( text ) {
+		return text.replace( LINK_PATTERN, function ( match, mdLabel, mdUrl, autoUrl, bareUrl ) {
+			var url = mdUrl || autoUrl || bareUrl;
+			var label = mdLabel || url;
 			return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + label + '</a>';
 		} );
+	}
+
+	function renderInline( text ) {
+		text = linkify( text );
 		text = text.replace( /\*\*(.+?)\*\*/g, '<strong>$1</strong>' );
 		text = text.replace( /(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g, '$1<em>$2</em>' );
 		text = text.replace( /`([^`]+)`/g, '<code>$1</code>' );

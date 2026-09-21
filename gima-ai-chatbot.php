@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GIMA AI Chatbot
  * Description: AI chatbot for GIMA Academy, powered by Groq. Pulls relevant course/page content from the site as context before answering.
- * Version: 1.0.0
+ * Version: 1.0.7
  * Author: GIMA
  */
 
@@ -10,9 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GIMA_CHATBOT_VERSION', '1.0.6' );
 define( 'GIMA_CHATBOT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GIMA_CHATBOT_URL', plugin_dir_url( __FILE__ ) );
+
+// Single source of truth for the version: the "Version:" header above. Keeps
+// the plugin list, asset cache-busting query strings, and this constant from
+// ever drifting out of sync with each other again.
+define( 'GIMA_CHATBOT_VERSION', get_file_data( __FILE__, [ 'Version' => 'Version' ] )['Version'] );
 
 require_once GIMA_CHATBOT_PATH . 'includes/class-db.php';
 require_once GIMA_CHATBOT_PATH . 'includes/class-groq-client.php';
