@@ -52,7 +52,7 @@ class Gima_Chatbot_Context_Builder {
 		$lines = [ 'Course-related pages on the site:' ];
 		foreach ( $courses as $course ) {
 			$excerpt = wp_strip_all_tags( $course->post_excerpt ?: wp_trim_words( $course->post_content, 25 ) );
-			$lines[] = '- ' . $course->post_title . ( $excerpt ? ': ' . $excerpt : '' );
+			$lines[] = '- [' . $course->post_title . '](' . get_permalink( $course ) . ')' . ( $excerpt ? ': ' . $excerpt : '' );
 		}
 
 		return implode( "\n", $lines );
@@ -95,7 +95,7 @@ class Gima_Chatbot_Context_Builder {
 		foreach ( $rows as $row ) {
 			$content = wp_strip_all_tags( $row->post_content );
 			$content = wp_trim_words( $content, 120 );
-			$lines[] = '### ' . $row->post_title . "\n" . $content;
+			$lines[] = '### [' . $row->post_title . '](' . get_permalink( $row->ID ) . ')' . "\n" . $content;
 		}
 
 		return implode( "\n\n", $lines );

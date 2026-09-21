@@ -140,8 +140,15 @@ body.gima-chatbot-body-lock {
 	margin-bottom: 0;
 }
 
-.gima-chatbot-assistant strong {
+.gima-chatbot-assistant a {
 	color: var(--gima-brand-start);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.gima-chatbot-assistant a:hover {
+	color: var(--gima-brand-end);
 }
 
 .gima-chatbot-assistant ul,

@@ -42,10 +42,15 @@
 			.replace( /'/g, '&#39;' );
 	}
 
-	// Minimal, safe Markdown -> HTML renderer for AI replies (bold, italics,
-	// inline code, lists, headings, pipe tables). Input is HTML-escaped first,
-	// so nothing the model outputs can inject real markup.
+	// Minimal, safe Markdown -> HTML renderer for AI replies (links, bold,
+	// italics, inline code, lists, headings, pipe tables). Input is
+	// HTML-escaped first, so nothing the model outputs can inject real markup;
+	// the only href scheme allowed is http(s), so the link step can't turn
+	// escaped text back into a javascript: URL or similar.
 	function renderInline( text ) {
+		text = text.replace( /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, function ( match, label, url ) {
+			return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + label + '</a>';
+		} );
 		text = text.replace( /\*\*(.+?)\*\*/g, '<strong>$1</strong>' );
 		text = text.replace( /(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g, '$1<em>$2</em>' );
 		text = text.replace( /`([^`]+)`/g, '<code>$1</code>' );
