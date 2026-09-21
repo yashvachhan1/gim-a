@@ -245,9 +245,12 @@
 				} );
 		}
 
+		var BODY_LOCK_CLASS = 'gima-chatbot-body-lock';
+
 		function openPanel() {
 			opened = true;
 			panel.style.display = 'flex';
+			document.body.classList.add( BODY_LOCK_CLASS );
 			hideTeaser();
 			if ( ! messagesEl.hasChildNodes() ) {
 				addMessage( 'assistant', GimaChatbot.greeting );
@@ -258,19 +261,21 @@
 			}
 		}
 
+		function closePanel() {
+			opened = false;
+			panel.style.display = 'none';
+			document.body.classList.remove( BODY_LOCK_CLASS );
+		}
+
 		launcher.addEventListener( 'click', function () {
 			if ( opened ) {
-				opened = false;
-				panel.style.display = 'none';
+				closePanel();
 			} else {
 				openPanel();
 			}
 		} );
 
-		panel.querySelector( '#gima-chatbot-close' ).addEventListener( 'click', function () {
-			opened = false;
-			panel.style.display = 'none';
-		} );
+		panel.querySelector( '#gima-chatbot-close' ).addEventListener( 'click', closePanel );
 
 		formEl.addEventListener( 'submit', function ( e ) {
 			e.preventDefault();

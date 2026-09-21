@@ -77,11 +77,33 @@
 #gima-chatbot-messages {
 	flex: 1;
 	overflow-y: auto;
+	overflow-x: hidden;
 	padding: 12px;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 	background: var(--gima-bg-soft);
+	scrollbar-width: thin;
+	scrollbar-color: rgba(7, 0, 221, 0.3) transparent;
+}
+
+#gima-chatbot-messages::-webkit-scrollbar {
+	width: 6px;
+}
+
+#gima-chatbot-messages::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+#gima-chatbot-messages::-webkit-scrollbar-thumb {
+	background: rgba(7, 0, 221, 0.3);
+	border-radius: 3px;
+}
+
+/* Prevent the page behind the chat from scrolling while it's open, so only
+   one scrollbar (the messages list above) is ever visible at a time. */
+body.gima-chatbot-body-lock {
+	overflow: hidden !important;
 }
 
 .gima-chatbot-msg {
