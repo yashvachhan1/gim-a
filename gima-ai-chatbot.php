@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GIMA AI Chatbot
  * Description: AI chatbot for GIMA Academy, powered by Groq. Pulls relevant course/page content from the site as context before answering.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: GIMA
  */
 

@@ -80,14 +80,14 @@
 				return c.trim();
 			} );
 		} );
-		var html = '<table class="gima-chatbot-table">';
+		var html = '<div class="gima-chatbot-table-wrap"><table class="gima-chatbot-table">';
 		cells.forEach( function ( row, idx ) {
 			var tag = idx === 0 ? 'th' : 'td';
 			html += '<tr>' + row.map( function ( c ) {
 				return '<' + tag + '>' + renderInline( c ) + '</' + tag + '>';
 			} ).join( '' ) + '</tr>';
 		} );
-		html += '</table>';
+		html += '</table></div>';
 		return html;
 	}
 

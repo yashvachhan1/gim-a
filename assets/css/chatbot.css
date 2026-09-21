@@ -120,6 +120,12 @@ body.gima-chatbot-body-lock {
 	font-size: 14px;
 	line-height: 1.45;
 	color: var(--gima-text);
+	/* Flex items with a non-visible overflow get their auto min-height
+	   treated as 0, which let messages get squashed down to a sliver with
+	   their own tiny scrollbar instead of keeping their natural height.
+	   flex-shrink: 0 keeps every message at its full content height so
+	   only the outer messages list (below) ever scrolls. */
+	flex-shrink: 0;
 }
 
 .gima-chatbot-user {
@@ -134,9 +140,19 @@ body.gima-chatbot-body-lock {
 	align-self: flex-start;
 	background: #fff;
 	max-width: 92%;
-	overflow-x: auto;
 	border: 1px solid #e3f4fa;
 	border-bottom-left-radius: 4px;
+}
+
+/* Horizontal scroll lives on this wrapper (only present around tables),
+   never on the message bubble itself. */
+.gima-chatbot-table-wrap {
+	overflow-x: auto;
+	margin: 0 0 8px;
+}
+
+.gima-chatbot-table-wrap .gima-chatbot-table {
+	margin: 0;
 }
 
 .gima-chatbot-assistant p {
