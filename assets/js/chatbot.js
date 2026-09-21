@@ -61,6 +61,11 @@
 	}
 
 	function renderInline( text ) {
+		// The model sometimes writes a literal <br> for a line break inside a
+		// table cell (the only place a line break can't be a plain newline).
+		// escapeHtml() turned it into text ("&lt;br&gt;"); turn it back into
+		// a real line break here rather than leaving it visible as text.
+		text = text.replace( /&lt;br\s*\/?&gt;/gi, '<br>' );
 		text = linkify( text );
 		text = text.replace( /\*\*(.+?)\*\*/g, '<strong>$1</strong>' );
 		text = text.replace( /(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g, '$1<em>$2</em>' );
