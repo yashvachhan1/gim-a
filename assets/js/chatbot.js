@@ -250,12 +250,35 @@
 				} );
 		}
 
-		var BODY_LOCK_CLASS = 'gima-chatbot-body-lock';
+		// Plain `overflow: hidden` on body does not reliably block touch-scrolling
+		// on mobile browsers, so pin the body in place at its current scroll
+		// offset instead, and restore the scroll position when closing.
+		var lockedScrollY = 0;
+
+		function lockBodyScroll() {
+			lockedScrollY = window.scrollY || window.pageYOffset || 0;
+			document.body.style.position = 'fixed';
+			document.body.style.top = ( -lockedScrollY ) + 'px';
+			document.body.style.left = '0';
+			document.body.style.right = '0';
+			document.body.style.width = '100%';
+			document.body.classList.add( 'gima-chatbot-body-lock' );
+		}
+
+		function unlockBodyScroll() {
+			document.body.classList.remove( 'gima-chatbot-body-lock' );
+			document.body.style.position = '';
+			document.body.style.top = '';
+			document.body.style.left = '';
+			document.body.style.right = '';
+			document.body.style.width = '';
+			window.scrollTo( 0, lockedScrollY );
+		}
 
 		function openPanel() {
 			opened = true;
 			panel.style.display = 'flex';
-			document.body.classList.add( BODY_LOCK_CLASS );
+			lockBodyScroll();
 			hideTeaser();
 			if ( ! messagesEl.hasChildNodes() ) {
 				addMessage( 'assistant', GimaChatbot.greeting );
@@ -269,7 +292,7 @@
 		function closePanel() {
 			opened = false;
 			panel.style.display = 'none';
-			document.body.classList.remove( BODY_LOCK_CLASS );
+			unlockBodyScroll();
 		}
 
 		launcher.addEventListener( 'click', function () {

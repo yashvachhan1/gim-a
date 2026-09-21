@@ -101,9 +101,16 @@
 }
 
 /* Prevent the page behind the chat from scrolling while it's open, so only
-   one scrollbar (the messages list above) is ever visible at a time. */
+   one scrollbar (the messages list above) is ever visible at a time.
+   JS pins body to `position: fixed` (works on mobile touch-scroll too);
+   this overflow rule is a harmless belt-and-braces backup for desktop. */
+html:has(body.gima-chatbot-body-lock) {
+	overflow: hidden !important;
+}
+
 body.gima-chatbot-body-lock {
 	overflow: hidden !important;
+	width: 100%;
 }
 
 .gima-chatbot-msg {

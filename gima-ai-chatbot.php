@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GIMA_CHATBOT_VERSION', '1.0.5' );
+define( 'GIMA_CHATBOT_VERSION', '1.0.6' );
 define( 'GIMA_CHATBOT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GIMA_CHATBOT_URL', plugin_dir_url( __FILE__ ) );
 
